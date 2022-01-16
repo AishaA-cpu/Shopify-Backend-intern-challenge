@@ -25,5 +25,11 @@ def create_app(test_config=None):
     db.init_app(app)
     migrate.init_app(app, db)
 
+    from .routes import inventory_bp, shipment_bp
     
+    app.register_blueprint(inventory_bp)
+    app.register_blueprint(shipment_bp)
+    
+    return app
+
 
