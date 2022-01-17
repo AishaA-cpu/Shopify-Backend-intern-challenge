@@ -12,8 +12,7 @@ class Inventory(db.Model):
             "quantity": self.inventory.quanity
 
         }
-
-
+        
     @classmethod
     def get_all_inventories(cls):
         return cls.query.all()
