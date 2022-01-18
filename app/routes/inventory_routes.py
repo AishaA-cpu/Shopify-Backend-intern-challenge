@@ -4,9 +4,9 @@ from app import db
 from http import HTTPStatus
 from app.models.inventory import Inventory
 from app.models.shipments import Shipment
-from app.models.route_helper_methods import Route_helpers
+from app.models.route_helper_methods import Inventory_helpers
 
-helpers = Route_helpers()
+I = Inventory_helpers()
 
 inventory_bp = Blueprint("inventory_bp", __name__, url_prefix= "/inventories")
 shipment_bp = Blueprint("shipment_bp", __name__, url_prefix= "/shipments")
@@ -20,7 +20,7 @@ def get_all_inventory_items():
     uses instance method to generate response for each inventory
     """
     
-    inventories = [Inventory.to_json for inventory in Inventory.get_all_inventories()]
+    inventories = [inventory.to_json() for inventory in Inventory.get_all_inventories()]
 
     return jsonify(inventories), 200
 
@@ -33,20 +33,21 @@ def get_one_inventory_item(inventory_id):
     inventory = Inventory.query.get(inventory_id)
 
     if inventory is None:
-        return helpers.record_not_found(inventory, inventory_id)
+        return I.inventory_not_found(inventory, inventory_id)
 
     return inventory.to_json(), HTTPStatus.OK
 
 @inventory_bp.route("/<inventory_id>", methods=["DELETE"])
 def delete_one_inventory_item(inventory_id):
     """
-    Deletes one inventory item
-    retruns 200 on success, 400 if bad request
+    Deletes one inventory item by inventory id
+    returns 200 on success, 404 if inventory to delete is not 
+    available. 
     """
     inventory = Inventory.query.get(inventory_id)
 
     if inventory is None:
-        return helpers.record_not_found(inventory, inventory_id)
+        return I.inventory_not_found(inventory, inventory_id), HTTPStatus.NOT_FOUND
 
     db.session.delete(inventory)
     db.session.commit()
@@ -59,30 +60,34 @@ def delete_one_inventory_item(inventory_id):
 @inventory_bp.route("", methods=["POST"])
 def create_inventory_item():
     """
-    Creates one inventory item checks that all attributes are 
-    to create inventory are in post request
+    Creates one inventory item checks that all attributes
+    to create inventory are in the post request
+    if post request is missing any of the fields, 
+    specify bad request
     """
     request_body =  request.get_json()
 
-    if "name" not in request_body or "quantity" not in request_body:
+    if I.bad_request(request_body):
         return {
             "message" : "make sure name and quatity are specified"
         }, HTTPStatus.BAD_REQUEST
 
 @inventory_bp.route("/<inventory_id>", methods=["PUT"])
-def create_inventory_item(inventory_id):
+def put_inventory_item(inventory_id):
     """
     This route modifies an exsisting inventory item,
     and replaces the item in data
     requires name and quantity in the put request
+    uses helper returns not found if inventory is not available
+    returns bad request if the request is missing any fields 
     """
     request_body =  request.get_json()
     inventory = Inventory.query.get(inventory_id)
 
     if inventory is None:
-        return helpers.record_not_found(inventory, inventory_id)
+        return I.inventory_not_found(inventory, inventory_id), HTTPStatus.NOT_FOUND
     
-    if "name" not in request_body or "quantity" not in request_body:
+    if I.bad_request(request_body):
         return {
             "message" : "make sure name and quatity are specified"
         }, HTTPStatus.BAD_REQUEST

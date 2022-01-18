@@ -1,9 +1,9 @@
 from http import HTTPStatus
 
 
-class Route_helpers:
-    def record_not_found(record, record_id):
+class Inventory_helpers:
+    def record_not_found(Inventory, Inventory_id):
         return {
-            "message" : f"{record} {record_id} not found"
+            "message" : f"{Inventory} {Inventory_id} not found"
         }, HTTPStatus.NOT_FOUND
 
