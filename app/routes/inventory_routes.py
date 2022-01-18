@@ -3,13 +3,12 @@ import requests
 from app import db
 from http import HTTPStatus
 from app.models.inventory import Inventory
-from app.models.shipments import Shipment
 from app.models.route_helper_methods import Inventory_helpers
 
 I = Inventory_helpers()
 
 inventory_bp = Blueprint("inventory_bp", __name__, url_prefix= "/inventories")
-shipment_bp = Blueprint("shipment_bp", __name__, url_prefix= "/shipments")
+
 
 @inventory_bp.route("", methods=["GET"])
 def get_all_inventory_items():
@@ -94,5 +93,6 @@ def put_inventory_item(inventory_id):
 
     inventory.name = request_body["name"]
     inventory.quantity = request_body["quantity"]
+    
 
     

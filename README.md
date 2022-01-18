@@ -1,14 +1,13 @@
 # Shopify-Backend-intern-challenge
 
-
-project demonstrates basic CRUD operations and an enhancement (Ability to create “shipments” and assign inventory to the shipment, 
+project demonstrates basic CRUD operations and an enhancement (Ability to create “shipments” and assign inventory to the shipment,
 and adjust inventory appropriately)
 
 It uses a dev and test database for unit testing, appropriate database is selected in the app/_init__ file
 but the user needs just a test database
 
 
-Uses the python language and pip package handler, please have them installed 
+Uses the python language and pip package handler, please have them installed
 
 Flask framework
 
@@ -17,10 +16,9 @@ Uses SQLALCHEMY, an ORM and alembic a tool to support SQLALCHEMY database migrat
 Setup Steps
 
 
-
-Clone repo, cd into repo and create a virtual env in your dir 
+Clone repo, cd into repo and create a virtual env in your dir
 create virtual env, -python -m venv venv
-activate vitual env, - source venv/bin/activate 
+activate vitual env, - source venv/bin/activate
 verify that you are working in a python virtual env
     python --version should output a Python 3 version
     pip --version
@@ -31,7 +29,7 @@ pip install -r requirements.txt
 
 
 create a .ENV file and set environment variables to point to data base
-please use the "SQLALCHEMY_TEST_DATABASE_URI"
+please use the "SQLALCHEMY_TEST_DATABASE_URI" or
 
 conftest file creates and drops(cleans up) records in your test database for testing purposes
 
@@ -40,14 +38,7 @@ e.g "SQLALCHEMY_TEST_DATABASE_URI"= "postgresql+psycopg2: path/to/your/test/data
 After creating database and connection string:
 
 one time setup, -> run flask db init to init database
-app/tests/test_route.py -> holds all unit tests for the routes
-
-
-
-
-
-
-
+app/tests/test_route.py -> holds all integration tests for the routes
 
 
 TASK: Build an inventory tracking web application for a logistics company. We are looking for a web application that meets the requirements listed below, along with one additional feature, with the options also listed below.
