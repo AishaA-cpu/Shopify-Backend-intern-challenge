@@ -10,6 +10,9 @@ from flask.signals import request_finished
 INVENTORY_NAME = "Pants"
 INVENTORY_QUANTITY = 1
 
+INVENTORY2_NAME = "Tops"
+INVENTORY2_QUANTITY = 2
+
 # ARRANGE, ACT, ASSERT
 # this file handles the arrange portion of the unit tests 
 
@@ -19,9 +22,9 @@ def app():
 
 
 
-    @request_finished.connect_via(app)
-    def expire_session(sender, response, **extra):
-        db.session.remove()
+    # @request_finished.connect_via(app)
+    # def expire_session(sender, response, **extra):
+    #     db.session.remove()
 
     with app.app_context():
         db.create_all()
@@ -43,5 +46,21 @@ def one_inventory(app):
     )
 
     db.session.add(new_inventory)
+    db.session.commit()
+
+@pytest.fixture
+def two_inventory(app):
+    new_inventory = Inventory(
+        name = INVENTORY_NAME,
+        quantity = INVENTORY_QUANTITY
+    )
+
+    new_inventory2 = Inventory(
+        name = INVENTORY2_NAME,
+        quantity = INVENTORY2_QUANTITY
+    )
+
+    db.session.add(new_inventory)
+    db.session.add(new_inventory2)
     db.session.commit()
 
