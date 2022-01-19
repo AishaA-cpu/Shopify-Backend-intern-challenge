@@ -8,7 +8,7 @@ but the user needs just a test database
 
 Uses the python language and pip package handler, please have them installed
 
-Flask framework
+also uses the Flask framework
 
 Uses SQLALCHEMY, an ORM and alembic a tool to support SQLALCHEMY database migrations they work with the flask framework.
 also uses psycopg2 - a PostgreSQL database adapter for python
