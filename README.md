@@ -36,12 +36,9 @@ conftest file creates and drops(cleans up) records in your test database for tes
 
 After creating database and connection string:
 
-one time setup, -> run flask db init to init database
+one time setup, -> run flask db init to init database and connect to flask
 app/tests/test_route.py -> holds all integration tests for the routes
-
-
+please run pytest in the root folder
 
 ## ERD OF CLASSES
-![](images/Screen%20Shot%202022-01-18%20at%2021.46.18.png) 
-
-## EXAMPLE SEQUENCE DIAGRAM OF ONE OF THE ROUTES
+![](images/ERD2.png)

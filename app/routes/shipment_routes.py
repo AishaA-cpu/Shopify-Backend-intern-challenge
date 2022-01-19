@@ -45,7 +45,9 @@ def create_one_shipment():
 def attach_inventory_to_shipment(shipment_id):
     """
     route takes a list of inventories and attaches them to a shipment 
-    updates inventory quantity. returns 404 if shipment is not available 
+    updates inventory quantity, deducts the quantity of each inventory 
+    item if it has been assigned to a shipment
+    . returns 404 if shipment is not available 
     returns 200 for successful assignment
     """
     request_body = request.get_json()
