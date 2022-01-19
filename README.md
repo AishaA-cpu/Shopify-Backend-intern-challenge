@@ -3,7 +3,7 @@
 project demonstrates basic CRUD operations and an enhancement (Ability to create “shipments” and assign inventory to the shipment,
 and adjust inventory appropriately)
 
-It uses a dev and test database for unit testing, appropriate database is selected in the app/_init__ file
+It uses a dev and test database for integration testing, appropriate database is selected in the app/_init__ file
 but the user needs just a test database
 
 Uses the python language and pip package handler, please have them installed
