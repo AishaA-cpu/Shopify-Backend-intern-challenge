@@ -31,7 +31,10 @@ def create_one_shipment():
 
     return {
         "shipment" : f"new shipment created for {new_shipment.address}"
-    }, HTTPStatus.OK
+    }, HTTPStatus.CREATED
+
+
+
 
 @shipment_bp.route("/<shipment_id>/assign_inventory", methods=["POST"])
 def attach_inventory_to_shipment(shipment_id):
@@ -39,17 +42,19 @@ def attach_inventory_to_shipment(shipment_id):
 
     shipment = Shipment.query.get(shipment_id)
 
-    if S.bad_shipment_request(request_body):
-        return {
-            "message" : "Include a shipment address"
-        }, HTTPStatus.BAD_REQUEST
+    if not shipment:
+        return S.Shipment_not_found(shipment_id), HTTPStatus.NOT_FOUND
 
     for inventory_id in request_body["inventory_id"]:
-        inventory = Inventory.query.get(inventory_id )
-        shipment.inventory.append(Inventory.query.get(inventory_id ))
+        inventory = Inventory.query.get(inventory_id)
+        shipment.inventory.append(inventory)
         inventory.quantity -= 1
-
+    
     db.session.commit()
 
+    return {
+        "id" : shipment.id,
+        "inventories": [inventory.id for inventory in shipment.inventory]
+    }
 
 

@@ -41,6 +41,18 @@ one time setup, -> run flask db init to init database
 app/tests/test_route.py -> holds all integration tests for the routes
 
 
+EXAMPLE SEQUENCE DIAGRAM OF ONE OF THE ROUTES
+
+
+ERD OF CLASSES
+
+
+
+
+
+
+
+
 TASK: Build an inventory tracking web application for a logistics company. We are looking for a web application that meets the requirements listed below, along with one additional feature, with the options also listed below.
 
 Requirements:

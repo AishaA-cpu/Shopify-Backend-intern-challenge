@@ -13,6 +13,8 @@ INVENTORY_QUANTITY = 1
 INVENTORY2_NAME = "Tops"
 INVENTORY2_QUANTITY = 2
 
+SHIPMENT_ADRESS = "Shopify Offices"
+
 # ARRANGE, ACT, ASSERT
 # this file handles the arrange portion of the unit tests 
 
@@ -50,17 +52,23 @@ def one_inventory(app):
 
 @pytest.fixture
 def two_inventory(app):
-    new_inventory = Inventory(
+    db.session.add_all([
+    Inventory(
         name = INVENTORY_NAME,
         quantity = INVENTORY_QUANTITY
-    )
+    ),
 
-    new_inventory2 = Inventory(
+    Inventory(
         name = INVENTORY2_NAME,
         quantity = INVENTORY2_QUANTITY
+    )]
     )
-
-    db.session.add(new_inventory)
-    db.session.add(new_inventory2)
     db.session.commit()
 
+@pytest.fixture
+def one_shipment(app):
+    new_shipment = Shipment(
+        address = SHIPMENT_ADRESS
+        )
+    db.session.add(new_shipment)
+    db.session.commit()

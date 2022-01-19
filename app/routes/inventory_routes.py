@@ -32,7 +32,7 @@ def get_one_inventory_item(inventory_id):
     inventory = Inventory.query.get(inventory_id)
 
     if inventory is None:
-        return I.inventory_not_found(inventory, inventory_id)
+        return I.inventory_not_found(inventory_id), HTTPStatus.NOT_FOUND
 
     return inventory.to_json(), HTTPStatus.OK
 
@@ -46,7 +46,7 @@ def delete_one_inventory_item(inventory_id):
     inventory = Inventory.query.get(inventory_id)
 
     if inventory is None:
-        return I.inventory_not_found(inventory, inventory_id), HTTPStatus.NOT_FOUND
+        return I.inventory_not_found(inventory_id), HTTPStatus.NOT_FOUND
 
     db.session.delete(inventory)
     db.session.commit()
@@ -66,10 +66,24 @@ def create_inventory_item():
     """
     request_body =  request.get_json()
 
+    
     if I.bad_request(request_body):
         return {
             "message" : "make sure name and quatity are specified"
         }, HTTPStatus.BAD_REQUEST
+
+    new_inventory = Inventory(
+        name=request_body["name"],
+        quantity=request_body["quantity"]
+    )
+
+    db.session.add(new_inventory)
+    db.session.commit()
+
+    return {
+        "inventory" : new_inventory.to_json()
+        }, HTTPStatus.CREATED
+    
 
 @inventory_bp.route("/<inventory_id>", methods=["PUT"])
 def put_inventory_item(inventory_id):
@@ -88,11 +102,20 @@ def put_inventory_item(inventory_id):
     
     if I.bad_request(request_body):
         return {
-            "message" : "make sure name and quatity are specified"
+            "message" : "make sure name and quantity are specified"
         }, HTTPStatus.BAD_REQUEST
 
     inventory.name = request_body["name"]
     inventory.quantity = request_body["quantity"]
-    
+
+    db.session.commit()
+
+    return {
+            "inventory":{
+                    "id" : inventory.id,
+                    "name":inventory.name,
+                    "quantity":inventory.quantity
+            }
+    }, HTTPStatus.OK
 
     
