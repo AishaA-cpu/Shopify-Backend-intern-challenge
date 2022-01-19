@@ -2,7 +2,8 @@ from app.models.inventory import Inventory
 from app.models.shipments import Shipment
 import pytest
 
-# The assert step of testing 
+# The assert act and assert portions of the test
+# these tests make calls to the routes using the data created in conftest.py
 
 def test_get_all_no_saved_inventory(client):
     response = client.get("/inventories")
@@ -31,7 +32,6 @@ def test_get_one_inventory_by_id(client, two_inventory):
     response_body = response.get_json()
 
     assert response.status_code == 200
-    #assert len(response_body) == 1
     assert response_body == {
             
                 "id" : 2,

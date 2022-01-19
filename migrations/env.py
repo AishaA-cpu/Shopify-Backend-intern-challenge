@@ -1,3 +1,5 @@
+# An auto generated file by alembic
+
 from __future__ import with_statement
 
 import logging

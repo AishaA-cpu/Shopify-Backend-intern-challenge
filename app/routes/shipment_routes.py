@@ -14,6 +14,11 @@ shipment_bp = Blueprint("shipment_bp", __name__, url_prefix= "/shipments")
 
 @shipment_bp.route("", methods=["POST"])
 def create_one_shipment():
+    """
+    creates one shipment, returns 201 status code for created and commited to db
+    400 for bad request if post request has missing attributes 
+
+    """
     request_body = request.get_json()
 
     if S.bad_shipment_request(request_body):
@@ -38,6 +43,11 @@ def create_one_shipment():
 
 @shipment_bp.route("/<shipment_id>/assign_inventory", methods=["POST"])
 def attach_inventory_to_shipment(shipment_id):
+    """
+    route takes a list of inventories and attaches them to a shipment 
+    updates inventory quantity. returns 404 if shipment is not available 
+    returns 200 for successful assignment
+    """
     request_body = request.get_json()
 
     shipment = Shipment.query.get(shipment_id)
@@ -55,6 +65,6 @@ def attach_inventory_to_shipment(shipment_id):
     return {
         "id" : shipment.id,
         "inventories": [inventory.id for inventory in shipment.inventory]
-    }
+    }, HTTPStatus.OK
 
 

@@ -7,7 +7,7 @@ class Inventory(db.Model):
     quantity = db.Column(db.Integer)
     shipment_id = db.Column(db.Integer, db.ForeignKey("shipment.id"))
     shipments = db.relationship("Shipment", backref="inventory", lazy=True)
-    #shipments = db.relationship("Shipment", back_populates="inventory")
+    
 
     def to_json(self):
         return {

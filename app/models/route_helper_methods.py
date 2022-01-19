@@ -1,4 +1,4 @@
-
+# helper methods to catch bad requests 
 
 class Inventory_helpers:
     def inventory_not_found(self, Inventory_id):

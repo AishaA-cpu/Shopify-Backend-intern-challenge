@@ -5,7 +5,9 @@ from app.models.shipments import Shipment
 from app import db
 from flask.signals import request_finished
 
-# Creates data for database for pytest unit tests
+# The testing method follows Arrange, Act, Assert steps
+# this is the arrange step of the tests
+# # simulates record to be posted in the database 
 
 INVENTORY_NAME = "Pants"
 INVENTORY_QUANTITY = 1
