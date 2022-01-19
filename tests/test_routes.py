@@ -127,6 +127,7 @@ def test_create_one_shipment(client):
 
 
 def test_assign_inventory_to_shipment(client, one_shipment, two_inventory):
+    # refer to conftest for original quantity of inventory items 
     response = client.post("/shipments/1/assign_inventory", json={
         "inventory_id": [1, 2]
     })
