@@ -17,8 +17,9 @@ def get_all_inventory_items():
     returns an empty list if no items are avaialble in database
     uses class method to get all inventories
     uses instance method to generate response for each inventory
+    jsonify converts a list to a json object
     """
-    
+    # new_list = [item for item in data]
     inventories = [inventory.to_json() for inventory in Inventory.get_all_inventories()]
 
     return jsonify(inventories), 200
