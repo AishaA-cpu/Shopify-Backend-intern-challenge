@@ -122,4 +122,4 @@ if running locally please set .env file database base variable name with
 ```
 
 ## ERD OF CLASSES
-![](images/ERD3.png)
+![](images/ERD2.png)
