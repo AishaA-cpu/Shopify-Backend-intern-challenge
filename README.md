@@ -54,6 +54,7 @@ we can use postman to send requests to ```http://localhost:5000``` stop the serv
 for example a get request tp  ```http://localhost:5000/inventories``` will get all inventories
 the route accepts json files for post request so please set ```content-type``` to application/json
 example of the  exact shape for json files are in the tests_routes.py file
+if running locally please set .env file database base variable name with ```"SQLALCHEMY_DATABASE_URI"```
 
 ## ERD OF CLASSES
 ![](images/ERD2.png)
