@@ -9,6 +9,18 @@ It uses a dev and test database for integration testing, appropriate database is
 but the user needs just a test database
 
 Uses the python language and pip package handler, please have them installed
+you can download python here 
+```
+https://www.python.org/downloads/
+```
+you can follow steps here to install pip
+```
+https://pip.pypa.io/en/stable/installation/
+```
+download postgres
+```
+https://www.postgresql.org/download/
+```
 
 also uses the Flask framework
 
