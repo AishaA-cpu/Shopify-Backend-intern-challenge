@@ -91,12 +91,12 @@ stop the server with
 ```
 ctrl c
 ```
-for example a get request to  
+for example a get request to will get all inventories
 ```
 http://localhost:5000/inventories
 ``` 
-will get all inventories
-the route accepts json files for post request so please set 
+
+these routes accept json files for post request so please set 
 ```
 content-type to application/json
 ``` 
