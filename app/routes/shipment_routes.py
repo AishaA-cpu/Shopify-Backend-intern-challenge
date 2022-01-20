@@ -1,5 +1,4 @@
-from operator import length_hint
-from flask import Blueprint, jsonify, make_response, request
+from flask import Blueprint, jsonify, request
 import requests
 from app import db
 from http import HTTPStatus
