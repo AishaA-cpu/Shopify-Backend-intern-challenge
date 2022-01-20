@@ -15,7 +15,9 @@ also uses psycopg2 - a PostgreSQL database adapter for python
 
 ## Setup Steps
 
-Clone repo, cd into repo and create a virtual env in your dir
+Clone repo, git clone ```https://github.com/AishaA-cpu/Shopify-Backend-intern-challenge.git```
+cd into repo
+and create a virtual env in your dir
 create virtual env, ```-python -m venv venv```
 activate vitual env, - ```source venv/bin/activate```
 verify that you are working in a python virtual env
