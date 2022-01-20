@@ -7,7 +7,11 @@ class Inventory_helpers:
         }
 
     def bad_request(self, json):
-        return "name" not in json or "quantity" not in json
+        required_parameters = {"name", "quantity", "price"}
+        set_of_json_keys = set(json.keys())
+        return required_parameters - set_of_json_keys
+
+        #return "name" not in json or "quantity" not in json or "price" not in json
 
 
 
@@ -18,4 +22,11 @@ class Shipment_helpers:
         }
 
     def bad_shipment_request(self, json):
-        return "address" not in json
+
+        required_parameters = {"name", "address", "length", "breadth", "width"}
+        set_of_json_keys = set(json.keys())
+
+        return required_parameters - set_of_json_keys
+
+        # return "address" not in json or "name" not in json or "length" \
+        # or  "breadth" not in json or "width" not in json
