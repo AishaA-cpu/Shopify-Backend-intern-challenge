@@ -1,6 +1,6 @@
 from app import db
 
-# the inventory model, 1 class method to get 
+# the inventory model, has 1 class method to get 
 # all stores inventories in the class
 # to_json instance method returns the attrubutes 
 # of the object
