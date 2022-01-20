@@ -66,15 +66,19 @@ def create_inventory_item():
     """
     request_body =  request.get_json()
 
-    
-    if I.bad_request(request_body):
+    missing_requirements = I.bad_request(request_body)
+
+    if missing_requirements:
+        missing_requirements = list(missing_requirements)
+        missing_requirements.sort()
         return {
-            "message" : "make sure name and quatity are specified"
+            "message" : f"please include {missing_requirements} to create inventory"
         }, HTTPStatus.BAD_REQUEST
 
     new_inventory = Inventory(
         name=request_body["name"],
-        quantity=request_body["quantity"]
+        quantity=request_body["quantity"],
+        price = request_body["price"]
     )
 
     db.session.add(new_inventory)
@@ -100,22 +104,20 @@ def put_inventory_item(inventory_id):
     if inventory is None:
         return I.inventory_not_found(inventory, inventory_id), HTTPStatus.NOT_FOUND
     
-    if I.bad_request(request_body):
+    missing_requirements = I.bad_request(request_body)
+    if missing_requirements:
         return {
-            "message" : "make sure name and quantity are specified"
+            "message" : f"please include {missing_requirements} to update inventory"
         }, HTTPStatus.BAD_REQUEST
 
     inventory.name = request_body["name"]
     inventory.quantity = request_body["quantity"]
+    inventory.price = request_body["price"]
 
     db.session.commit()
 
     return {
-            "inventory":{
-                    "id" : inventory.id,
-                    "name":inventory.name,
-                    "quantity":inventory.quantity
-            }
+        "inventory" : inventory.to_json()
     }, HTTPStatus.OK
 
     

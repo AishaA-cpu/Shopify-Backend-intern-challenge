@@ -1,6 +1,7 @@
 from app.models.inventory import Inventory
 from app.models.shipments import Shipment
 import pytest
+from datetime import datetime
 
 # The assert act and assert portions of the test
 # these tests make calls to the routes using the data created in conftest.py
@@ -22,7 +23,8 @@ def test_get_all_inventory_one_saved_inventory(client, one_inventory):
         {
             "id" : 1,
             "name": "Pants",
-            "quantity" : 1
+            "quantity" : 1,
+            "price" : 10
         }
     ]
 
@@ -36,7 +38,9 @@ def test_get_one_inventory_by_id(client, two_inventory):
             
                 "id" : 2,
                 "name": "Tops",
-                "quantity" : 2
+                "quantity" : 2,
+                "price" : 15
+
             }
 
 def test_get_one_inventory_by_id_not_found(client, two_inventory):
@@ -56,22 +60,27 @@ def test_post_all_no_name(client):
 
     assert response.status_code == 400
     assert response_body == {
-        "message" : "make sure name and quatity are specified"
+        "message" : "please include ['name', 'price'] to create inventory"
     }
 
 def test_create_one_inventory(client):
     response = client.post("/inventories", json={
         "quantity":1,
-        "name": "shoes"
+        "name": "shoes",
+        "price": 10
+
     })
     response_body =response.get_json()
 
     assert response.status_code == 201
     assert response_body == { 
         "inventory" :
-                    {"id" : 1,
+                    {
+                    "id" : 1,
                     "name" : "shoes",
-                    "quantity": 1}
+                    "quantity": 1,
+                    "price" : 10
+                    }
     }
 
 def test_delete_one_inventory(client, one_inventory):
@@ -90,7 +99,8 @@ def test_delete_one_inventory(client, one_inventory):
 def test_update_inventory(client, one_inventory):
     response = client.put("/inventories/1", json={
         "name":"blouse",
-        "quantity": 5
+        "quantity": 5,
+        "price" : 12
     })
 
     response_body = response.get_json()
@@ -100,7 +110,8 @@ def test_update_inventory(client, one_inventory):
         "inventory":{
             "id" : 1,
             "name": "blouse",
-            "quantity": 5
+            "quantity": 5,
+            "price" : 12
         }
     }
 
@@ -112,18 +123,33 @@ def test_update_inventory(client, one_inventory):
 
 def test_create_one_shipment(client):
     response = client.post("/shipments", json={
-        "address" : "Shopify Offices"
+        "address" : "Shopify Offices",
+        "name" : "Shopify employee",
+        "length" : 1.0,
+        "width" : 1.0,
+        "breadth" : 1.0,
+        "weight" : 1.0
     })
 
     response_body = response.get_json()
     assert response.status_code == 201
 
     assert response_body == {
-        "shipment" : f"new shipment created for Shopify Offices"
+        "shipment" : {
+            "id" : 1,
+            "address" : "Shopify Offices",
+            "created_date": datetime.now().strftime("%a, %-d %b %Y %X GMT"),
+            "name" : "Shopify employee",
+            "length" : 1.0,
+            "breadth" : 1.0,
+            "width" : 1.0,
+            "weight" :  1.0
+        }
     }
     new_shipment = Shipment.query.get(1)
     assert new_shipment
     assert new_shipment.address == "Shopify Offices"
+    assert new_shipment.name == "Shopify employee"
 
 
 def test_assign_inventory_to_shipment(client, one_shipment, two_inventory):

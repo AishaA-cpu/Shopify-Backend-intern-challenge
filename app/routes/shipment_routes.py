@@ -1,3 +1,4 @@
+from operator import length_hint
 from flask import Blueprint, jsonify, make_response, request
 import requests
 from app import db
@@ -20,14 +21,21 @@ def create_one_shipment():
 
     """
     request_body = request.get_json()
+    
+    missing_requirements = S.bad_shipment_request(request_body)
 
-    if S.bad_shipment_request(request_body):
+    if missing_requirements:
         return {
-            "message" : "Include a shipment address"
+            "message" : f"please include {missing_requirements} to create shipment"
         }, HTTPStatus.BAD_REQUEST
 
     new_shipment = Shipment(
         address =  request_body["address"],
+        name = request_body["name"],
+        length = request_body["length"],
+        breadth = request_body["breadth"],
+        width = request_body["width"],
+        weight = request_body["weight"],
         created_date = datetime.now()
     )
 
@@ -35,8 +43,8 @@ def create_one_shipment():
     db.session.commit()
 
     return {
-        "shipment" : f"new shipment created for {new_shipment.address}"
-    }, HTTPStatus.CREATED
+        "shipment" : new_shipment.to_json()
+        }, HTTPStatus.CREATED
 
 
 
@@ -44,8 +52,8 @@ def create_one_shipment():
 @shipment_bp.route("/<shipment_id>/assign_inventory", methods=["POST"])
 def attach_inventory_to_shipment(shipment_id):
     """
-    route takes a list of inventories and attaches them to a shipment 
-    updates inventory quantity, deducts the quantity of each inventory 
+    route takes a list of inventories and attaches one of each inventory item to a shipment 
+    updates inventory quantity, deducts one from each inventory 
     item if it has been assigned to a shipment
     . returns 404 if shipment is not available 
     returns 200 for successful assignment
@@ -59,6 +67,10 @@ def attach_inventory_to_shipment(shipment_id):
 
     for inventory_id in request_body["inventory_id"]:
         inventory = Inventory.query.get(inventory_id)
+        if inventory.quantity <= 0:
+            return {
+                "message" : f"{inventory.name} with {inventory.id} is not available"
+            }, HTTPStatus.INTERNAL_SERVER_ERROR
         shipment.inventory.append(inventory)
         inventory.quantity -= 1
     
