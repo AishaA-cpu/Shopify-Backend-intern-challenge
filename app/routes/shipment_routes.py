@@ -54,7 +54,7 @@ def attach_inventory_to_shipment(shipment_id):
     route takes a list of inventories and attaches one of each inventory item to a shipment 
     updates inventory quantity, deducts one from each inventory 
     item if it has been assigned to a shipment
-    . returns 404 if shipment is not available 
+    . returns 404 if shipment is not available. returns error is inventory quantity is 0
     returns 200 for successful assignment, a dictionay with shipment id and a list of inventories
     uses list comprehension. SQLA returns an list object for relationship objects
     """
