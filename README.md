@@ -1,4 +1,6 @@
 # Shopify-Backend-intern-challenge
+## Task
+Build an inventory tracking web application for a logistics company. We are looking for a web application that meets the requirements listed below, along with one additional feature.
 
 project demonstrates basic CRUD operations and an enhancement (Ability to create “shipments” and assign inventory to the shipment,
 and adjust inventory appropriately)
