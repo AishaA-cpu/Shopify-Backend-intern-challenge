@@ -11,9 +11,6 @@ class Inventory_helpers:
         set_of_json_keys = set(json.keys())
         return required_parameters - set_of_json_keys
 
-        #return "name" not in json or "quantity" not in json or "price" not in json
-
-
 
 class Shipment_helpers:
     def Shipment_not_found(self, Shipment_id):
@@ -28,5 +25,3 @@ class Shipment_helpers:
 
         return required_parameters - set_of_json_keys
 
-        # return "address" not in json or "name" not in json or "length" \
-        # or  "breadth" not in json or "width" not in json
