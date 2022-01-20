@@ -56,7 +56,8 @@ def attach_inventory_to_shipment(shipment_id):
     updates inventory quantity, deducts one from each inventory 
     item if it has been assigned to a shipment
     . returns 404 if shipment is not available 
-    returns 200 for successful assignment
+    returns 200 for successful assignment, a dictionay with shipment id and a list of inventories
+    uses list comprehension. SQLA returns an list object for relationship objects
     """
     request_body = request.get_json()
 
@@ -75,7 +76,8 @@ def attach_inventory_to_shipment(shipment_id):
         inventory.quantity -= 1
     
     db.session.commit()
-
+    
+    
     return {
         "id" : shipment.id,
         "inventories": [inventory.id for inventory in shipment.inventory]

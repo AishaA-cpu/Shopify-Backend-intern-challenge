@@ -1,6 +1,10 @@
 from app import db
 
-
+# the inventory model, has 1 class method to get 
+# all stores inventories in the class
+# to_json instance method returns the attrubutes 
+# of the object
+# inventory inherits from the SQLA base model
 class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)

@@ -5,6 +5,9 @@ from datetime import datetime
 
 # The assert act and assert portions of the test
 # these tests make calls to the routes using the data created in conftest.py
+# they simulate postman calls
+# More About the requests.get() Method
+# We can learn more about what the requests.get() method does, what its parameters are, and what it returns with its request.get documentation.
 
 def test_get_all_no_saved_inventory(client):
     response = client.get("/inventories")
