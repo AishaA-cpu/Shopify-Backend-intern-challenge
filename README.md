@@ -15,7 +15,10 @@ also uses psycopg2 - a PostgreSQL database adapter for python
 
 ## Setup Steps
 
-Clone repo, git clone ```https://github.com/AishaA-cpu/Shopify-Backend-intern-challenge.git```
+Clone repo, git clone 
+```
+https://github.com/AishaA-cpu/Shopify-Backend-intern-challenge.git
+```
 
 cd into repo
 
