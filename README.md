@@ -6,7 +6,7 @@ project demonstrates basic CRUD operations and an enhancement (Ability to create
 and adjust inventory appropriately)
 
 It uses a dev and test database for integration testing, appropriate database is selected in the app/_init__ file
-but the user needs just a test database
+but the user needs just a test database if running only the tests via this project
 
 Uses the python language and pip package handler, please have them installed
 you can download python here 
