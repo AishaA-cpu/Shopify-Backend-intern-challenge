@@ -4,6 +4,7 @@ import pytest
 
 # The assert act and assert portions of the test
 # these tests make calls to the routes using the data created in conftest.py
+# they simulate postman calls
 
 def test_get_all_no_saved_inventory(client):
     response = client.get("/inventories")
